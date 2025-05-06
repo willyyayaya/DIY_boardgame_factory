@@ -1,0 +1,73 @@
+/* 基本樣式設定 */
+:root {
+  --primary-color: #4f46e5;
+  --primary-hover: #4338ca;
+  --secondary-color: #f3f4f6;
+  --text-color: #1f2937;
+  --light-text: #6b7280;
+  --border-color: #e5e7eb;
+}
+
+/* 表單樣式自定義 */
+.select2-container--default .select2-selection--multiple {
+  border-color: var(--border-color) !important;
+  border-radius: 0.5rem;
+  min-height: 3rem;
+  padding: 0.25rem;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: var(--primary-color);
+  border: none;
+  color: white;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  margin: 0.25rem;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  color: rgba(255, 255, 255, 0.7);
+  margin-right: 0.5rem;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+  color: white;
+}
+
+/* 遊戲卡片特效 */
+.game-card {
+  transition: transform 0.3s ease;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+}
+
+/* 打印樣式 */
+@media print {
+  header, footer, button, .no-print {
+    display: none;
+  }
+  
+  body {
+    background: white;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: none;
+  }
+  
+  .game-card {
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ddd;
+  }
+}
+
+/* 響應式調整 */
+@media (max-width: 768px) {
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+} 
