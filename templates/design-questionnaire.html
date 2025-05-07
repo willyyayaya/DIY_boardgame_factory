@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>設計您的桌遊 - AI桌遊設計工廠</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <header class="bg-indigo-700 text-white py-6 shadow-md">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-bold text-center">設計您的桌遊</h1>
+            <p class="text-center mt-2 text-indigo-100">告訴我們您想要的桌遊類型，AI將協助您創造一個獨特的遊戲</p>
+        </div>
+    </header>
+    
+    <main class="container mx-auto p-4 md:p-8">
+        <!-- 指南卡片 -->
+        <div class="bg-indigo-50 rounded-lg shadow-md p-5 mb-8 max-w-4xl mx-auto">
+            <div class="flex items-start">
+                <div class="text-indigo-600 mr-4">
+                    <i class="fas fa-lightbulb text-3xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-2">設計問卷指南</h3>
+                    <p class="text-gray-700 mb-2">填寫以下問卷，您提供的信息越詳細，AI設計的桌遊就越符合您的期望。請思考每個選項，告訴我們您想創造的桌遊類型。</p>
+                    <p class="text-gray-700">您可以隨時參考我們提供的模板，獲取設計靈感。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-xl p-6 md:p-8 max-w-4xl mx-auto">
+            <form id="designForm" action="/submit-design" method="post" class="space-y-8">
+                <!-- 基本設定 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-4 pb-2 border-b border-gray-200">
+                        <i class="fas fa-cog mr-2"></i>基本遊戲設定
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- 遊戲名稱 -->
+                        <div class="form-group">
+                            <label for="game_name" class="block text-gray-700 font-medium mb-2">
+                                您的桌遊名稱（可選）
+                                <span class="tooltip ml-1 text-gray-400 cursor-help" title="如果您沒有想好名字，AI可以為您生成一個合適的名稱">
+                                    <i class="fas fa-question-circle"></i>
+                                </span>
+                            </label>
+                            <input type="text" id="game_name" name="game_name" placeholder="輸入遊戲名稱或留空讓AI起名" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        
+                        <!-- 玩家人數 -->
+                        <div class="form-group">
+                            <label for="player_count" class="block text-gray-700 font-medium mb-2">
+                                設計給多少人玩的桌遊？
+                                <span class="tooltip ml-1 text-gray-400 cursor-help" title="選擇您希望設計的桌遊適合的玩家人數">
+                                    <i class="fas fa-question-circle"></i>
+                                </span>
+                            </label>
+                            <select id="player_count" name="player_count" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                <option value="">-- 請選擇 --</option>
+                                <option value="2人專用">2人專用</option>
+                                <option value="2-4人">2-4人</option>
+                                <option value="4-6人">4-6人</option>
+                                <option value="6-8人">6-8人</option>
+                                <option value="8+人">8人以上</option>
+                                <option value="人數彈性">人數彈性設計</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                        <!-- 遊戲時長 -->
+                        <div class="form-group">
+                            <label for="game_duration" class="block text-gray-700 font-medium mb-2">
+                                希望的遊戲時長？
+                                <span class="tooltip ml-1 text-gray-400 cursor-help" title="選擇您希望設計的桌遊每局所需的時間">
+                                    <i class="fas fa-question-circle"></i>
+                                </span>
+                            </label>
+                            <select id="game_duration" name="game_duration" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                <option value="">-- 請選擇 --</option>
+                                <option value="快速遊戲(15分鐘以內)">快速遊戲(15分鐘以內)</option>
+                                <option value="短時遊戲(15-30分鐘)">短時遊戲(15-30分鐘)</option>
+                                <option value="中等時長(30-60分鐘)">中等時長(30-60分鐘)</option>
+                                <option value="長時遊戲(1-2小時)">長時遊戲(1-2小時)</option>
+                                <option value="長度史詩(2小時以上)">長度史詩(2小時以上)</option>
+                            </select>
+                        </div>
+                        
+                        <!-- 複雜度 -->
+                        <div class="form-group">
+                            <label for="complexity" class="block text-gray-700 font-medium mb-2">
+                                希望的遊戲複雜度？
+                                <span class="tooltip ml-1 text-gray-400 cursor-help" title="1表示規則非常簡單，適合初學者；5表示規則複雜，需要較多思考和策略">
+                                    <i class="fas fa-question-circle"></i>
+                                </span>
+                            </label>
+                            <div class="flex flex-col sm:flex-row items-center justify-between bg-gray-50 p-4 rounded-lg">
+                                <span class="text-sm text-gray-500 mb-2 sm:mb-0">簡單</span>
+                                <div class="flex space-x-4">
+                                    <div class="complexity-option">
+                                        <input type="radio" id="complexity1" name="complexity" value="1" class="hidden" required>
+                                        <label for="complexity1" class="complexity-label">
+                                            <span class="text-lg font-medium">1</span>
+                                            <span class="block text-xs text-gray-500 mt-1">極簡單</span>
+                                        </label>
+                                    </div>
+                                    <div class="complexity-option">
+                                        <input type="radio" id="complexity2" name="complexity" value="2" class="hidden">
+                                        <label for="complexity2" class="complexity-label">
+                                            <span class="text-lg font-medium">2</span>
+                                            <span class="block text-xs text-gray-500 mt-1">入門級</span>
+                                        </label>
+                                    </div>
+                                    <div class="complexity-option">
+                                        <input type="radio" id="complexity3" name="complexity" value="3" class="hidden" checked>
+                                        <label for="complexity3" class="complexity-label">
+                                            <span class="text-lg font-medium">3</span>
+                                            <span class="block text-xs text-gray-500 mt-1">中等</span>
+                                        </label>
+                                    </div>
+                                    <div class="complexity-option">
+                                        <input type="radio" id="complexity4" name="complexity" value="4" class="hidden">
+                                        <label for="complexity4" class="complexity-label">
+                                            <span class="text-lg font-medium">4</span>
+                                            <span class="block text-xs text-gray-500 mt-1">較複雜</span>
+                                        </label>
+                                    </div>
+                                    <div class="complexity-option">
+                                        <input type="radio" id="complexity5" name="complexity" value="5" class="hidden">
+                                        <label for="complexity5" class="complexity-label">
+                                            <span class="text-lg font-medium">5</span>
+                                            <span class="block text-xs text-gray-500 mt-1">高度複雜</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-500 mt-2 sm:mt-0">複雜</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 遊戲內容設定 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-4 pb-2 border-b border-gray-200">
+                        <i class="fas fa-dice mr-2"></i>遊戲內容設定
+                    </h3>
+                    
+                    <!-- 遊戲主題 -->
+                    <div class="form-group mb-6">
+                        <label for="themes" class="block text-gray-700 font-medium mb-2">
+                            您想要的遊戲主題是？（可多選）
+                            <span class="tooltip ml-1 text-gray-400 cursor-help" title="選擇您希望的遊戲背景和風格">
+                                <i class="fas fa-question-circle"></i>
+                            </span>
+                        </label>
+                        <select id="themes" name="themes" class="select2-multiple w-full p-3 border border-gray-300 rounded-lg" multiple required>
+                            <option value="奇幻">奇幻</option>
+                            <option value="科幻">科幻</option>
+                            <option value="歷史">歷史</option>
+                            <option value="冒險">冒險</option>
+                            <option value="恐怖">恐怖</option>
+                            <option value="神話">神話</option>
+                            <option value="戰爭">戰爭</option>
+                            <option value="經濟">經濟</option>
+                            <option value="城市建設">城市建設</option>
+                            <option value="動物">動物</option>
+                            <option value="自然">自然</option>
+                            <option value="抽象">抽象</option>
+                            <option value="卡通">卡通</option>
+                            <option value="偵探">偵探</option>
+                            <option value="海盜">海盜</option>
+                            <option value="僵屍">僵屍</option>
+                            <option value="西部">西部</option>
+                            <option value="東方">東方</option>
+                            <option value="中世紀">中世紀</option>
+                            <option value="現代">現代</option>
+                            <option value="未來">未來</option>
+                            <option value="廚藝">廚藝</option>
+                            <option value="音樂">音樂</option>
+                            <option value="體育">體育</option>
+                        </select>
+                        <div id="themes-error" class="text-red-500 text-sm mt-1 hidden">請至少選擇一個主題</div>
+                    </div>
+                    
+                    <!-- 遊戲機制 -->
+                    <div class="form-group mb-6">
+                        <label for="mechanics" class="block text-gray-700 font-medium mb-2">
+                            您想要包含哪些遊戲機制？（可多選）
+                            <span class="tooltip ml-1 text-gray-400 cursor-help" title="遊戲機制決定了遊戲的核心玩法和互動方式">
+                                <i class="fas fa-question-circle"></i>
+                            </span>
+                        </label>
+                        <select id="mechanics" name="mechanics" class="select2-multiple w-full p-3 border border-gray-300 rounded-lg" multiple required>
+                            <option value="回合制">回合制</option>
+                            <option value="合作">合作</option>
+                            <option value="競爭">競爭</option>
+                            <option value="卡牌管理">卡牌管理</option>
+                            <option value="骰子">骰子</option>
+                            <option value="角色扮演">角色扮演</option>
+                            <option value="資源管理">資源管理</option>
+                            <option value="領土控制">領土控制</option>
+                            <option value="拍賣">拍賣</option>
+                            <option value="交易">交易</option>
+                            <option value="策略">策略</option>
+                            <option value="推理">推理</option>
+                            <option value="隱藏信息">隱藏信息</option>
+                            <option value="計分板">計分板</option>
+                            <option value="路徑建設">路徑建設</option>
+                            <option value="收集套組">收集套組</option>
+                            <option value="動作點分配">動作點分配</option>
+                            <option value="手牌管理">手牌管理</option>
+                            <option value="模擬">模擬</option>
+                            <option value="故事講述">故事講述</option>
+                            <option value="解謎">解謎</option>
+                            <option value="陣營對抗">陣營對抗</option>
+                            <option value="投票">投票</option>
+                            <option value="隱藏身份">隱藏身份</option>
+                            <option value="引擎構建">引擎構建</option>
+                            <option value="區域控制">區域控制</option>
+                            <option value="放置工人">放置工人</option>
+                        </select>
+                        <div id="mechanics-error" class="text-red-500 text-sm mt-1 hidden">請至少選擇一個機制</div>
+                    </div>
+                    
+                    <!-- 遊戲氛圍 -->
+                    <div class="form-group">
+                        <label for="atmosphere" class="block text-gray-700 font-medium mb-2">
+                            您希望設計的遊戲氛圍是？
+                            <span class="tooltip ml-1 text-gray-400 cursor-help" title="選擇您想要的遊戲整體感覺">
+                                <i class="fas fa-question-circle"></i>
+                            </span>
+                        </label>
+                        <select id="atmosphere" name="atmosphere" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                            <option value="">-- 請選擇 --</option>
+                            <option value="歡樂派對">歡樂派對 - 適合社交聚會</option>
+                            <option value="緊張刺激">緊張刺激 - 充滿懸疑和未知</option>
+                            <option value="深思熟慮">深思熟慮 - 講究策略與計劃</option>
+                            <option value="激烈競爭">激烈競爭 - 直接對抗與交鋒</option>
+                            <option value="合作共贏">合作共贏 - 團隊協作解決問題</option>
+                            <option value="沉浸故事">沉浸故事 - 深入角色與世界觀</option>
+                            <option value="輕鬆休閒">輕鬆休閒 - 簡單愉快的體驗</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- 特殊需求與參考 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-4 pb-2 border-b border-gray-200">
+                        <i class="fas fa-star mr-2"></i>特殊需求與參考
+                    </h3>
+                    
+                    <!-- 遊戲參考 -->
+                    <div class="form-group mb-6">
+                        <label for="reference_games" class="block text-gray-700 font-medium mb-2">
+                            有哪些桌遊可作為您設計的參考？（選填）
+                            <span class="tooltip ml-1 text-gray-400 cursor-help" title="列出您喜歡的或想要借鑒元素的桌遊">
+                                <i class="fas fa-question-circle"></i>
+                            </span>
+                        </label>
+                        <textarea id="reference_games" name="reference_games" rows="3" placeholder="例如：卡坦島、狼人殺、妙語說書人..." class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                    </div>
+                    
+                    <!-- 特殊要求 -->
+                    <div class="form-group">
+                        <label for="special_requirements" class="block text-gray-700 font-medium mb-2">
+                            特殊設計要求或創意（選填）
+                            <span class="tooltip ml-1 text-gray-400 cursor-help" title="有什麼獨特的想法或特殊要求需要AI考慮的？">
+                                <i class="fas fa-question-circle"></i>
+                            </span>
+                        </label>
+                        <textarea id="special_requirements" name="special_requirements" rows="4" placeholder="請描述您的特殊要求或獨特創意..." class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                    </div>
+                </div>
+                
+                <!-- 設計模板選擇 -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-4 pb-2 border-b border-gray-200">
+                        <i class="fas fa-copy mr-2"></i>設計模板選擇
+                    </h3>
+                    
+                    <p class="text-gray-700 mb-4">選擇一個設計模板作為基礎，AI將根據您的需求進行調整和創新</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- 模板選項 -->
+                        <div class="template-option border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-300">
+                            <input type="radio" id="template1" name="design_template" value="策略棋盤遊戲" class="hidden" required>
+                            <label for="template1" class="block cursor-pointer h-full">
+                                <div class="bg-indigo-100 p-3 text-center">
+                                    <h4 class="font-semibold text-indigo-800">策略棋盤遊戲</h4>
+                                </div>
+                                <div class="p-3">
+                                    <p class="text-sm text-gray-600">以棋盤為基礎，強調策略思考與規劃，類似於棋類遊戲。</p>
+                                </div>
+                            </label>
+                        </div>
+                        
+                        <div class="template-option border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-300">
+                            <input type="radio" id="template2" name="design_template" value="卡牌遊戲" class="hidden">
+                            <label for="template2" class="block cursor-pointer h-full">
+                                <div class="bg-indigo-100 p-3 text-center">
+                                    <h4 class="font-semibold text-indigo-800">卡牌遊戲</h4>
+                                </div>
+                                <div class="p-3">
+                                    <p class="text-sm text-gray-600">主要使用卡牌元素，包括收集、組合或對抗等機制。</p>
+                                </div>
+                            </label>
+                        </div>
+                        
+                        <div class="template-option border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-300">
+                            <input type="radio" id="template3" name="design_template" value="派對遊戲" class="hidden">
+                            <label for="template3" class="block cursor-pointer h-full">
+                                <div class="bg-indigo-100 p-3 text-center">
+                                    <h4 class="font-semibold text-indigo-800">派對遊戲</h4>
+                                </div>
+                                <div class="p-3">
+                                    <p class="text-sm text-gray-600">適合多人同樂，強調互動、歡笑和社交元素。</p>
+                                </div>
+                            </label>
+                        </div>
+                        
+                        <div class="template-option border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-300">
+                            <input type="radio" id="template4" name="design_template" value="角色扮演" class="hidden">
+                            <label for="template4" class="block cursor-pointer h-full">
+                                <div class="bg-indigo-100 p-3 text-center">
+                                    <h4 class="font-semibold text-indigo-800">角色扮演</h4>
+                                </div>
+                                <div class="p-3">
+                                    <p class="text-sm text-gray-600">玩家扮演特定角色，進行故事冒險和決策。</p>
+                                </div>
+                            </label>
+                        </div>
+                        
+                        <div class="template-option border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-300">
+                            <input type="radio" id="template5" name="design_template" value="資源管理" class="hidden">
+                            <label for="template5" class="block cursor-pointer h-full">
+                                <div class="bg-indigo-100 p-3 text-center">
+                                    <h4 class="font-semibold text-indigo-800">資源管理</h4>
+                                </div>
+                                <div class="p-3">
+                                    <p class="text-sm text-gray-600">以收集和管理資源為核心，進行戰略決策。</p>
+                                </div>
+                            </label>
+                        </div>
+                        
+                        <div class="template-option border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-300">
+                            <input type="radio" id="template6" name="design_template" value="合作解謎" class="hidden">
+                            <label for="template6" class="block cursor-pointer h-full">
+                                <div class="bg-indigo-100 p-3 text-center">
+                                    <h4 class="font-semibold text-indigo-800">合作解謎</h4>
+                                </div>
+                                <div class="p-3">
+                                    <p class="text-sm text-gray-600">玩家共同合作解決謎題或挑戰，而非互相競爭。</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center pt-4">
+                    <button type="submit" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">
+                        開始設計我的桌遊
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+    
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2023 AI桌遊設計工廠 | <a href="/" class="underline hover:text-indigo-300">返回首頁</a></p>
+        </div>
+    </footer>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // 初始化Select2多選框
+            $('.select2-multiple').select2({
+                placeholder: "請選擇（可多選）",
+                allowClear: true
+            });
+            
+            // 複雜度和模板選項樣式
+            $('.complexity-label').click(function() {
+                $('.complexity-label').removeClass('bg-indigo-100 border-indigo-500');
+                $(this).addClass('bg-indigo-100 border-indigo-500');
+            });
+            
+            // 模板選項樣式
+            $('.template-option label').click(function() {
+                $('.template-option').removeClass('border-indigo-500 shadow-md');
+                $(this).parent().addClass('border-indigo-500 shadow-md');
+            });
+            
+            // 表單驗證
+            $('#designForm').submit(function(e) {
+                let valid = true;
+                
+                // 驗證主題
+                if (!$('#themes').val() || $('#themes').val().length === 0) {
+                    $('#themes-error').removeClass('hidden');
+                    valid = false;
+                } else {
+                    $('#themes-error').addClass('hidden');
+                }
+                
+                // 驗證機制
+                if (!$('#mechanics').val() || $('#mechanics').val().length === 0) {
+                    $('#mechanics-error').removeClass('hidden');
+                    valid = false;
+                } else {
+                    $('#mechanics-error').addClass('hidden');
+                }
+                
+                if (!valid) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

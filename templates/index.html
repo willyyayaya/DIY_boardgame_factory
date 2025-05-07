@@ -3,45 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI桌遊推薦工廠</title>
+    <title>AI桌遊設計工廠</title>
     <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 min-h-screen">
     <header class="bg-indigo-700 text-white py-6 shadow-md">
         <div class="container mx-auto px-4">
-            <h1 class="text-3xl font-bold text-center">AI桌遊推薦工廠</h1>
-            <p class="text-center mt-2 text-indigo-100">讓AI為您尋找最適合的桌遊體驗</p>
+            <h1 class="text-3xl font-bold text-center">AI桌遊設計工廠</h1>
+            <p class="text-center mt-2 text-indigo-100">讓AI協助您創造專屬的桌遊</p>
         </div>
     </header>
     
     <main class="container mx-auto p-4 md:p-8">
         <section class="bg-white rounded-lg shadow-xl p-6 md:p-8 max-w-4xl mx-auto">
-            <h2 class="text-2xl font-bold text-indigo-800 mb-6">歡迎來到AI桌遊推薦系統</h2>
+            <h2 class="text-2xl font-bold text-indigo-800 mb-6">歡迎來到AI桌遊設計系統</h2>
             
             <div class="prose max-w-none mb-8">
                 <p class="text-gray-700">
-                    不確定玩什麼桌遊？讓我們基於您的喜好、玩家人數和遊戲時間為您推薦最合適的桌遊！
+                    想要設計自己的桌遊但不知從何開始？讓我們的AI協助您從零開始創造一個獨特的桌遊！
                 </p>
                 <p class="text-gray-700 mt-4">
-                    只需回答幾個問題，我們的AI將分析您的偏好，並從廣泛的桌遊庫中為您找到最佳選擇。
+                    只需回答一系列問題，我們的AI將根據您的想法和偏好，幫助您設計出符合您期望的桌遊，包括遊戲機制、規則和元素等。
                 </p>
             </div>
             
             <div class="bg-indigo-50 p-4 rounded-lg mb-8">
-                <h3 class="text-xl font-semibold text-indigo-700 mb-3">AI如何為您推薦桌遊？</h3>
+                <h3 class="text-xl font-semibold text-indigo-700 mb-3">AI如何幫助您設計桌遊？</h3>
                 <ul class="list-disc pl-5 text-gray-700 space-y-2">
-                    <li>分析您喜歡的遊戲類型和主題</li>
-                    <li>考慮您偏好的遊戲機制（如策略、合作、角色扮演等）</li>
-                    <li>匹配適合您玩家人數和遊戲時間的桌遊</li>
-                    <li>根據您的經驗水平推薦適合複雜度的遊戲</li>
-                    <li>提供個性化理由，解釋為何這些遊戲適合您</li>
+                    <li>分析您想要的桌遊類型和主題</li>
+                    <li>建議適合的遊戲機制和規則</li>
+                    <li>設計合適的遊戲元素和組件</li>
+                    <li>平衡遊戲的複雜度和可玩性</li>
+                    <li>提供多種桌遊設計模板供您參考和選擇</li>
+                    <li>生成完整的遊戲規則文檔</li>
                 </ul>
             </div>
             
             <div class="text-center">
-                <a href="/preferences" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
-                    開始尋找您的完美桌遊 →
+                <a href="/design-questionnaire" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
+                    開始設計您的桌遊 →
                 </a>
             </div>
         </section>
@@ -50,11 +51,11 @@
             <div class="bg-white p-5 rounded-lg shadow-md text-center">
                 <div class="bg-indigo-100 p-3 inline-block rounded-full mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                     </svg>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-800 mb-2">為任何玩家群體</h3>
-                <p class="text-gray-600">無論您是2人還是大型聚會，我們都能找到合適的遊戲選擇。</p>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">簡單的設計流程</h3>
+                <p class="text-gray-600">填寫問卷，回答關於桌遊設計的問題，AI將為您生成完整的設計方案。</p>
             </div>
             
             <div class="bg-white p-5 rounded-lg shadow-md text-center">
@@ -63,25 +64,25 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                     </svg>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-800 mb-2">高度客製化</h3>
-                <p class="text-gray-600">根據您的個人喜好和遊戲經驗提供量身定制的建議。</p>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">客製化設計</h3>
+                <p class="text-gray-600">依據您的創意和偏好，打造完全個人化的桌遊，擁有獨特風格和機制。</p>
             </div>
             
             <div class="bg-white p-5 rounded-lg shadow-md text-center">
                 <div class="bg-indigo-100 p-3 inline-block rounded-full mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-800 mb-2">立即獲得建議</h3>
-                <p class="text-gray-600">只需幾秒鐘，即可獲得AI精心挑選的桌遊推薦。</p>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">設計模板參考</h3>
+                <p class="text-gray-600">提供多種桌遊設計模板，幫助您從現有遊戲機制中獲得靈感。</p>
             </div>
         </section>
     </main>
     
     <footer class="bg-gray-800 text-white py-6 mt-12">
         <div class="container mx-auto px-4 text-center">
-            <p>&copy; 2023 AI桌遊推薦工廠 | 以AI技術驅動的桌遊推薦平台</p>
+            <p>&copy; 2023 AI桌遊設計工廠 | 以AI技術驅動的桌遊設計平台</p>
         </div>
     </footer>
     

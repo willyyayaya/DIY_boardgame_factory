@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>您的桌遊設計 - AI桌遊設計工廠</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <header class="bg-indigo-700 text-white py-6 shadow-md">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-bold text-center">您的專屬桌遊設計</h1>
+            <p class="text-center mt-2 text-indigo-100">AI根據您的需求設計的獨特桌遊</p>
+        </div>
+    </header>
+    
+    <main class="container mx-auto p-4 md:p-8">
+        <div class="bg-white rounded-lg shadow-xl p-6 md:p-8 max-w-5xl mx-auto mb-8">
+            <!-- 設計概述 -->
+            <div class="mb-8 p-5 bg-indigo-50 rounded-lg">
+                <div class="flex items-start">
+                    <div class="text-indigo-600 flex-shrink-0 mr-4">
+                        <i class="fas fa-lightbulb text-3xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-indigo-800 mb-4">設計概述</h2>
+                        <p class="text-gray-700">{{ design.description }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 遊戲名稱和視覺設計 -->
+            <div class="mb-8 text-center">
+                <h2 class="text-3xl font-bold text-indigo-800 mb-4">{{ design.name }}</h2>
+                <div class="inline-block px-4 py-2 bg-indigo-100 text-indigo-700 rounded-lg">
+                    <span class="mr-2"><i class="fas fa-users"></i></span>{{ design.player_count }} |
+                    <span class="mx-2"><i class="fas fa-clock"></i></span>{{ design.duration }} |
+                    <span class="mx-2"><i class="fas fa-brain"></i></span>複雜度: {{ design.complexity }}/5
+                </div>
+            </div>
+            
+            <!-- 遊戲主題和氛圍 -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-indigo-800 mb-4 flex items-center">
+                    <i class="fas fa-theater-masks mr-3 text-indigo-600"></i>
+                    主題與氛圍
+                </h3>
+                <div class="bg-gray-50 p-5 rounded-lg">
+                    <p class="text-gray-700 mb-4">{{ design.theme_description }}</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        {% for theme in design.themes %}
+                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">{{ theme }}</span>
+                        {% endfor %}
+                    </div>
+                    <p class="text-gray-700"><strong>遊戲氛圍：</strong>{{ design.atmosphere }}</p>
+                </div>
+            </div>
+            
+            <!-- 遊戲組件 -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-indigo-800 mb-4 flex items-center">
+                    <i class="fas fa-puzzle-piece mr-3 text-indigo-600"></i>
+                    遊戲組件
+                </h3>
+                <div class="bg-gray-50 p-5 rounded-lg">
+                    <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                        {% for component in design.components %}
+                        <li>{{ component }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 遊戲規則 -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-indigo-800 mb-4 flex items-center">
+                    <i class="fas fa-book mr-3 text-indigo-600"></i>
+                    遊戲規則
+                </h3>
+                <div class="space-y-4">
+                    <!-- 遊戲目標 -->
+                    <div class="bg-gray-50 p-5 rounded-lg mb-4">
+                        <h4 class="font-semibold text-lg text-gray-800 mb-2">遊戲目標</h4>
+                        <p class="text-gray-700">{{ design.objective }}</p>
+                    </div>
+                    
+                    <!-- 遊戲設置 -->
+                    <div class="bg-gray-50 p-5 rounded-lg mb-4">
+                        <h4 class="font-semibold text-lg text-gray-800 mb-2">遊戲設置</h4>
+                        <ol class="list-decimal pl-5 text-gray-700 space-y-2">
+                            {% for step in design.setup %}
+                            <li>{{ step }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                    
+                    <!-- 遊戲流程 -->
+                    <div class="bg-gray-50 p-5 rounded-lg mb-4">
+                        <h4 class="font-semibold text-lg text-gray-800 mb-2">遊戲流程</h4>
+                        <div class="text-gray-700">
+                            {{ design.gameplay | safe }}
+                        </div>
+                    </div>
+                    
+                    <!-- 勝利條件 -->
+                    <div class="bg-gray-50 p-5 rounded-lg">
+                        <h4 class="font-semibold text-lg text-gray-800 mb-2">勝利條件</h4>
+                        <p class="text-gray-700">{{ design.victory_condition }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 遊戲提示與變體 -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-indigo-800 mb-4 flex items-center">
+                    <i class="fas fa-lightbulb mr-3 text-indigo-600"></i>
+                    遊戲提示與變體
+                </h3>
+                <div class="bg-gray-50 p-5 rounded-lg">
+                    <h4 class="font-semibold text-lg text-gray-800 mb-2">策略提示</h4>
+                    <ul class="list-disc pl-5 text-gray-700 space-y-2 mb-4">
+                        {% for tip in design.strategy_tips %}
+                        <li>{{ tip }}</li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <h4 class="font-semibold text-lg text-gray-800 mb-2">遊戲變體</h4>
+                    <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                        {% for variant in design.variants %}
+                        <li>{{ variant }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 下載與分享 -->
+            <div class="mt-8 p-4 bg-gray-50 rounded-lg">
+                <h3 class="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                    <i class="fas fa-share-alt mr-2 text-indigo-600"></i>
+                    保存與分享您的設計
+                </h3>
+                <div class="flex flex-wrap gap-2">
+                    <button id="printRules" class="inline-flex items-center bg-indigo-100 hover:bg-indigo-200 text-indigo-800 py-2 px-3 rounded-md transition-colors">
+                        <i class="fas fa-print mr-2"></i>
+                        列印遊戲規則
+                    </button>
+                    <button id="downloadPDF" class="inline-flex items-center bg-indigo-100 hover:bg-indigo-200 text-indigo-800 py-2 px-3 rounded-md transition-colors">
+                        <i class="fas fa-file-pdf mr-2"></i>
+                        下載PDF規則
+                    </button>
+                    <button id="copyLink" class="inline-flex items-center bg-indigo-100 hover:bg-indigo-200 text-indigo-800 py-2 px-3 rounded-md transition-colors">
+                        <i class="fas fa-link mr-2"></i>
+                        複製設計連結
+                    </button>
+                    <span id="copyMessage" class="hidden text-green-600 ml-2 flex items-center">
+                        <i class="fas fa-check-circle mr-1"></i>
+                        已複製連結！
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-10 space-y-6">
+            <p class="text-gray-700">對這個設計滿意嗎？您可以進一步完善它或嘗試創建新的桌遊。</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="/refine-design/{{ design.id }}" class="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                    <i class="fas fa-edit mr-2"></i>
+                    調整這個設計
+                </a>
+                
+                <a href="/design-questionnaire" class="inline-flex items-center justify-center bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg transition duration-300">
+                    <i class="fas fa-plus mr-2"></i>
+                    創建新桌遊
+                </a>
+                
+                <a href="/" class="inline-flex items-center justify-center border border-gray-300 hover:bg-gray-100 text-gray-700 font-bold py-3 px-6 rounded-lg transition duration-300">
+                    <i class="fas fa-home mr-2"></i>
+                    返回首頁
+                </a>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2023 AI桌遊設計工廠 | <a href="/" class="underline hover:text-indigo-300">返回首頁</a></p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 列印功能
+            const printRulesBtn = document.getElementById('printRules');
+            if (printRulesBtn) {
+                printRulesBtn.addEventListener('click', function() {
+                    window.print();
+                });
+            }
+            
+            // 複製連結功能
+            const copyLinkBtn = document.getElementById('copyLink');
+            const copyMessage = document.getElementById('copyMessage');
+            
+            if (copyLinkBtn) {
+                copyLinkBtn.addEventListener('click', function() {
+                    // 獲取當前URL
+                    const url = window.location.href;
+                    
+                    // 創建臨時元素來複製
+                    const tempInput = document.createElement('input');
+                    tempInput.value = url;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempInput);
+                    
+                    // 顯示成功訊息
+                    copyMessage.classList.remove('hidden');
+                    setTimeout(() => {
+                        copyMessage.classList.add('hidden');
+                    }, 3000);
+                });
+            }
+            
+            // 下載PDF功能（需要服務器端支援）
+            const downloadPDFBtn = document.getElementById('downloadPDF');
+            if (downloadPDFBtn) {
+                downloadPDFBtn.addEventListener('click', function() {
+                    const designId = '{{ design.id }}';
+                    window.location.href = '/download-design-pdf/' + designId;
+                });
+            }
+        });
+    </script>
+</body>
+</html> 
